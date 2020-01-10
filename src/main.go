@@ -8,17 +8,16 @@ import (
 )
 
 func main() {
-	grid := display.NewSquareDisplay(20)
-	go func() {
-		defer grid.Stop()
-		for i := 0; i < 1000; i++ {
-			x := rand.Int() % 20
-			y := rand.Int() % 20
-			grid.UpdateCoord(x, y, (byte(rand.Int()%94) + ' '))
-			time.Sleep(25 * time.Millisecond)
-		}
-	}()
-	grid.Start()
+	grid := display.NewSquareDisplay(50)
+	go grid.Start()
+	//go func() {
+	defer grid.Stop()
+	for i := 0; i < 1000; i++ {
+		x := rand.Int() % 50
+		y := rand.Int() % 50
+		grid.UpdateCoord(x, y, (byte(rand.Int()%94) + ' '))
+		time.Sleep(17 * time.Millisecond)
+	}
+	//}()
 
-	time.Sleep(1 * time.Second)
 }
