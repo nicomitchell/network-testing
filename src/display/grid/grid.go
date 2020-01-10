@@ -1,7 +1,5 @@
 package grid
 
-import "fmt"
-
 //Grid is the grid type
 type Grid struct {
 	Grid [][]byte
@@ -12,6 +10,9 @@ func NewGridBySize(x int, y int) *Grid {
 	g := make([][]byte, x)
 	for i := range g {
 		g[i] = make([]byte, y)
+		for j := range g[i] {
+			g[i][j] = ' '
+		}
 	}
 	return &Grid{
 		Grid: g,
@@ -26,11 +27,4 @@ func NewGridWithInitializer(g [][]byte) *Grid {
 //NewGridSquare returns a square grid
 func NewGridSquare(x int) *Grid {
 	return NewGridBySize(x, x)
-}
-
-//Display prints the grid
-func (g *Grid) Display() {
-	for _, row := range g.Grid {
-		fmt.Println(row)
-	}
 }
