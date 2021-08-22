@@ -19,13 +19,24 @@ type NodeInfo struct {
 	//tbd
 }
 
-type Node struct {
-	ServerPort string
-	Ports      map[string]*net.Conn
-	Info       NodeInfo
-	Router     *mux.Router
+type NetworkInfo struct {
+	// "Neighbors" are other nodes that this Node is directly connected to
+	Neighbors map[string]*net.Conn
+	// Key: Node that this node is aware of
+	// Value: Node that made this node aware of Key node
+	// If this host has a direct connection to the Key Node, the value string will be empty
+	AllHosts map[string]string
 }
 
+type Node struct {
+	ServerPort  string
+	Ports       map[string]*net.Conn
+	NetworkInfo NetworkInfo
+	Info        NodeInfo
+	Router      *mux.Router
+}
+
+//copied from stack overflow - just to get the local ip addr
 func getNodeInfo() NodeInfo {
 	hostName := os.Getenv("HOSTNAME")
 	conn, err := net.Dial("udp", "8.8.8.8:80")
